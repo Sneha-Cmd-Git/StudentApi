@@ -47,5 +47,35 @@ namespace EntityApi.Controllers
             await _service.AddStudent(student);
             return Ok("Student added");
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CreateStudentDTO dto)
+        {
+            var student = await _service.GetStudentById(id);
+
+            if (student == null)
+                return NotFound("Student not found");
+
+            student.Name = dto.Name;
+            student.Email = dto.Email;
+            student.Age = dto.Age;
+            student.Course = dto.Course;
+
+            await _service.UpdateStudent(student);
+
+            return Ok("Student updated successfully");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var student = await _service.GetStudentById(id);
+
+            if (student == null)
+                return NotFound("Student not found");
+
+            await _service.DeleteStudent(id);
+
+            return Ok("Student deleted successfully");
+        }
     }
 }
