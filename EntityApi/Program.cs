@@ -43,13 +43,14 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // 🔹 Middleware (ORDER MATTERS)
-app.UseMiddleware<ExceptionMiddleware>();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// ✅ move here
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
