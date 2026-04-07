@@ -1,4 +1,5 @@
-﻿using EntityApi.Models;
+﻿using EntityApi.DTOs;
+using EntityApi.Models;
 using EntityApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +21,31 @@ namespace EntityApi.Controllers
         public async Task<IActionResult> Get()
         {
             var students = await _service.GetAllStudents();
-            return Ok(students);
+
+            var result = students.Select(s => new StudentResponseDTO
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Course = s.Course
+            });
+
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Student student)
+        public async Task<IActionResult> Post(CreateStudentDTO dto)
         {
+            var student = new Student
+            {
+                Name = dto.Name,
+                Email = dto.Email,
+                Age = dto.Age,
+                Course = dto.Course,
+                CreatedDate = DateTime.Now
+            };
+
             await _service.AddStudent(student);
-            return Ok("Student added successfully");
+            return Ok("Student added");
         }
     }
 }
