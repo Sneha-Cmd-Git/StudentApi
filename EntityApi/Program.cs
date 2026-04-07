@@ -1,5 +1,7 @@
 using EntityApi.Data;
 using EntityApi.Middleware;
+using EntityApi.Repositories;
+using EntityApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,7 +19,8 @@ builder.Host.UseSerilog();
 
 // 🔹 Services
 builder.Services.AddControllers();
-
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

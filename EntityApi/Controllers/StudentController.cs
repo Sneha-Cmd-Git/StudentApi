@@ -17,7 +17,7 @@ namespace EntityApi.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("Get")]
         public async Task<IActionResult> Get()
         {
             var students = await _service.GetAllStudents();
@@ -32,7 +32,7 @@ namespace EntityApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("Post")]
         public async Task<IActionResult> Post(CreateStudentDTO dto)
         {
             var student = new Student
