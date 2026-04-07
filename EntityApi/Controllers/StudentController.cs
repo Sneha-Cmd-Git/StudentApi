@@ -47,6 +47,8 @@ namespace EntityApi.Controllers
             await _service.AddStudent(student);
             return Ok("Student added");
         }
+
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, CreateStudentDTO dto)
         {
